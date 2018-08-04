@@ -1,10 +1,10 @@
-import Card from "./card";
-import {enumCard} from './enumCard'
+const Card = require('./card');
+const {enumCard} = require('./enumCard');
 
-export default class ChangeColorCard extends Card{
+class ChangeColorCard extends Card{
 
     constructor(theColor, theSign, theId){
-        super(theColor, theSign, theId, 15);
+        super(theColor, theSign, theId);
         this.direction = enumCard.enumActionDirection.CHANGE_COLOR;
     }
 
@@ -16,3 +16,5 @@ export default class ChangeColorCard extends Card{
         return !lastCard.isActive();
     }
 }
+
+module.exports = ChangeColorCard;

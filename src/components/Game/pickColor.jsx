@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {enumCard} from './../js/enumCard'
 
 export default class PickColorReact extends React.Component {
     constructor(args) {
@@ -10,7 +9,7 @@ export default class PickColorReact extends React.Component {
         this.greenPicked = this.greenPicked.bind(this);
         this.redPicked = this.redPicked.bind(this);
         this.finishAnimation = this.finishAnimation.bind(this);
-
+        this.fetchColorPicked = this.fetchColorPicked.bind(this);
     }
     renderWithAnimation(){
         return(
@@ -63,32 +62,41 @@ export default class PickColorReact extends React.Component {
         this.setState({anm: false});
     }
 
+    fetchColorPicked(color) {
+        let massage = {color: color, uniqueID: this.props.uniqueID,
+            gameName: this.props.gameName};
+        return fetch('/game/colorPicked', {
+            method: 'POST',
+            body: JSON.stringify(massage),
+            credentials: 'include'
+        })
+    }
 
     bluePicked(ev) {
         if(this.props.interactive === false)
             return false;
         ev.preventDefault();
-        this.props.game.colorPicked(enumCard.enumColor.BLUE);
+        this.fetchColorPicked(this.props.enumColor.BLUE);
     }
 
     yellowPicked(ev) {
         if(this.props.interactive === false)
             return false;
         ev.preventDefault();
-        this.props.game.colorPicked(enumCard.enumColor.YELLOW);
+        this.fetchColorPicked(this.props.enumColor.YELLOW);
     }
 
     greenPicked(ev) {
         if(this.props.interactive === false)
             return false;
         ev.preventDefault();
-        this.props.game.colorPicked(enumCard.enumColor.GREEN);
+        this.fetchColorPicked(this.props.enumColor.GREEN);
     }
 
     redPicked(ev) {
         if(this.props.interactive === false)
             return false;
         ev.preventDefault();
-        this.props.game.colorPicked(enumCard.enumColor.RED);
+        this.fetchColorPicked(this.props.enumColor.RED);
     }
 }

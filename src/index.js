@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import BoardComponent from './components/boardReact';
-import Game from "./js/game";
-import StateManagement from "./js/stateManagement";
+import "./style.css";
+import BaseContainer from './components/baseContainer.jsx';
 
 
+/* Directly adding react element */
 ReactDOM.render(
-    <BoardComponent game = {new Game()} manager = {new StateManagement()}/>,
+    <BaseContainer />, 
     document.getElementById("root")
 );

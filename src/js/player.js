@@ -1,21 +1,21 @@
-import {enumCard} from './enumCard'
-import {takiModeChecker} from './operations'
+const {enumCard} = require('./enumCard');
+const {takiModeChecker} = require('./operations');
 
-export default class Player{
+
+
+class Player{
     constructor(theName,theTurn){
         this.allCards = [];
         this.singleCardCounter = 0;
-        this.score = 0;
         this.averageTimePlayed = 0;
         this.turnsPlayedForStatistics = 0;
         this.takiMode = undefined;
         this.name = theName;
-        this.turn = theTurn;
+        this.id = theTurn;
     }
 
-    setManager(playerManagement, index){
-        this.playerManagement = playerManagement;
-        this.playerIndex = index;
+    setManager(stateManagement){
+        this.stateManagement = stateManagement;
     }
 
     increasePlayerTurns(){
@@ -77,21 +77,21 @@ export default class Player{
         return this.averageTimePlayed;
     }
 
-    setCardsPlace(humanAnimation){
-        this.playerManagement.playersCards[this.playerIndex] = [];
-        this.addCards(this.allCards, humanAnimation);
+    setCardsPlace(){
+        this.stateManagement.playersCards[this.id] = [];
+        this.addCards(this.allCards);
     }
 
-    addCards(cardsToAdd, humanAnimation) {
-        this.playerManagement.stackCards.push({humanAnimation: humanAnimation, id: cardsToAdd[0].id});
-        this.playerManagement.renderAnimationEnd = false;
+    addCards(cardsToAdd) {
+        this.stateManagement.playerManagement.forEach(p => p.stackCards.push({playerID: this.id, id: cardsToAdd[0].id}));
+        this.stateManagement.viewerManagement.forEach(v => v.stackCards.push({playerID: this.id, id: cardsToAdd[0].id}));
         this.saveCardsToAdd = cardsToAdd;
     }
 
     updateCardsToAdd() {
         if(this.saveCardsToAdd !== undefined){
             this.saveCardsToAdd.forEach(card => {
-                this.playerManagement.playersCards[this.playerIndex].push({image: card.uniqueCardImage, id: card.id});
+                this.stateManagement.playersCards[this.id].push({image: card.uniqueCardImage, id: card.id});
             });
             this.saveCardsToAdd = undefined;
         }
@@ -103,12 +103,8 @@ export default class Player{
 
 
     doOperation(card, lastCard) {
-        for(let i = 0; i < this.playerManagement.playersCards[this.playerIndex].length; ++i){
-            if (this.playerManagement.playersCards[this.playerIndex][i].id === card.id) {
-                this.playerManagement.playersCards[this.playerIndex].splice(i, 1);
-                break;
-            }
-        }
+        this.stateManagement.updateDirection(card, this.id);
+        this.stateManagement.deletePlayerCard(card,this.id);
 
         let promote = card.doOperation(this, lastCard);
         if (this.takiMode !== undefined) {
@@ -126,20 +122,6 @@ export default class Player{
             this.singleCardCounter++;
         return promote;
     }
-
-    calcScore(){
-      let score = 0;
-        this.allCards.forEach(card => {
-            score += card.score;
-        });
-      return score;
-    }
-
-    updateTournamentScore(playerScore){
-        this.score += playerScore;
-    }
-
-    getScore(){
-        return this.score;
-    }
 }
+
+module.exports = Player;

@@ -1,10 +1,11 @@
-import Player from './player'
-import {enumCard} from './enumCard'
-import {setCards} from './operations'
+const Player = require('./player');
+const {enumCard} = require('./enumCard');
+const {setCards} = require('./operations');
 
-export default class HumanPlayer extends Player{
-    constructor(playerTurn){
-        super("HumanPlayer",playerTurn);
+
+class HumanPlayer extends Player{
+    constructor(username,playerTurn){
+        super(username,playerTurn);
         this.turnsPlayed = 0;
         this.currentTurnTime = 0;
     }
@@ -31,18 +32,10 @@ export default class HumanPlayer extends Player{
         this.currentTurnTime = 0;
     }
 
-    setAverageTimePlayed(currentAvarageTimePlayed){
-        this.averageTimePlayed = currentAvarageTimePlayed;
-    }
-
     setCards(theCards) {
         this.allCards = theCards;
         setInterval(this.calcCurrentTurn.bind(this),1000);
-        super.setCardsPlace(true);
-    }
-
-    setTurnsPlayed(currentTurnsPlayed){
-        this.turnsPlayed =  currentTurnsPlayed;
+        super.setCardsPlace();
     }
 
     increasePlayerTurns() {
@@ -52,16 +45,12 @@ export default class HumanPlayer extends Player{
 
     doOperation(card, lastCard){
         this.removeCard(card);
-        if (card.sign !== enumCard.enumTypes.TWO_PLUS)
-            this.playerManagement.direction = card.direction;
-        else
-            this.playerManagement.direction = undefined;
         return super.doOperation(card, lastCard);
     }
 
     pullCardFromStock(cardsToSet) {
         setCards(this.allCards, cardsToSet);
-        super.addCards(cardsToSet,true);
+        super.addCards(cardsToSet);
     }
 
 
@@ -80,7 +69,9 @@ export default class HumanPlayer extends Player{
     }
 
     pickColor() {
-        this.playerManagement.pickColorVidibility = "visible";
+        this.stateManagement.playerManagement[this.id].pickColorVidibility = "visible";
         return enumCard.enumResult.CONTINUE_TURN;
     }
 }
+
+module.exports = HumanPlayer;

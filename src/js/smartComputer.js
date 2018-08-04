@@ -1,12 +1,13 @@
-import Player from './player'
-import {enumCard} from './enumCard'
+const {enumCard} = require('./enumCard');
+const Player = require('./player');
 
-export default class SmartComputer extends Player{
+
+class SmartComputer extends Player{
 
     constructor(playerTurn){
         super("ComputerPlayer",playerTurn);
         this.colorsCards = [[], [], [], []];
-        this.typesCards = [[], [], [], [], [], [], []];
+        this.typesCards = [[], [], [], [], [], [], [], []];
         this.numberOfPlayers = undefined;
         this.lastCardInTaki = undefined;
         this.pickedColor = false;
@@ -333,7 +334,7 @@ export default class SmartComputer extends Player{
             this.insertType(cardsToAdd[i]);
             this.allCards.push(cardsToAdd[i]);
         }
-        super.addCards(cardsToAdd, false);
+        super.addCards(cardsToAdd);
     }
 
     takiWithConnection() {
@@ -445,10 +446,10 @@ export default class SmartComputer extends Player{
         this.pickedColor = false;
     }
 
-    setCards(cards, playersAmount){
-        this.numberOfPlayers = playersAmount;
+    setCards(cards){
+        this.numberOfPlayers = 2;
         this.setAllCards(cards);
-        super.setCardsPlace(false);
+        super.setCardsPlace();
     }
 
     pullCardFromStock(cardsToAdd){
@@ -469,10 +470,6 @@ export default class SmartComputer extends Player{
 
     doOperation(card, lastCard){
         this.removeAllCardAppearances(card);
-        if (card.sign !== enumCard.enumTypes.TWO_PLUS)
-            this.playerManagement.direction = undefined;
-        else
-            this.playerManagement.direction = card.direction;
         return super.doOperation(card, lastCard);
     }
 
@@ -498,3 +495,5 @@ export default class SmartComputer extends Player{
         return this.pickedColor;
     }
 }
+
+module.exports = SmartComputer;

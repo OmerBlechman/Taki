@@ -1,10 +1,11 @@
-import Card from "./card";
-import {enumCard} from './enumCard'
-import {getUniqueCss} from './operations'
-export default class SuperTaki extends Card{
+const {enumCard} = require('./enumCard');
+const Card = require('./card');
+const {getUniqueCss} = require('./operations');
+
+class SuperTaki extends Card{
 
     constructor(theColor, theSign, theId){
-        super(theColor, theSign, theId,15);
+        super(theColor, theSign, theId);
         this.direction = enumCard.enumActionDirection.TAKI;
     }
 
@@ -20,3 +21,5 @@ export default class SuperTaki extends Card{
         return !lastCard.isActive();
     }
 }
+
+module.exports = SuperTaki;

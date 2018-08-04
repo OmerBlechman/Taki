@@ -3,7 +3,7 @@ const enumCard = (function () {
         enumColor: Object.freeze({RED: 0, BLUE: 1, GREEN: 2, YELLOW: 3}),
         enumTypes: Object.freeze({
             STOP: 0, CHANGE_COLOR: 1, PLUS: 2, NUMBER: 3, TAKI: 4,
-            SUPER_TAKI: 5, TWO_PLUS: 6
+            SUPER_TAKI: 5, TWO_PLUS: 6, CHANGE_DIR: 7
         }),
 
         enumPlayer: Object.freeze({
@@ -35,13 +35,13 @@ const enumCard = (function () {
         }),
 
         images: Object.freeze({
-            CLOSE_CARD: "../src/Images/other/close_card.png",
-            MANY_CLOSE_CARDS: "../src/Images/other/many_close_cards.png",
-            FEW_CLOSE_CARDS: "../src/Images/other/few_close_cards.png"
+            CLOSE_CARD: "close_card.png",
+            MANY_CLOSE_CARDS: "many_close_cards.png",
+            FEW_CLOSE_CARDS: "few_close_cards.png"
         }),
 
         enumResult: Object.freeze({
-            EXTRA_TURN: 0, NEXT_TURN: 1, JUMP_TURN: 2,
+            CHANGE_DIR: -1, EXTRA_TURN: 0, NEXT_TURN: 1, JUMP_TURN: 2,
             CONTINUE_TURN: 3
         }),
 
@@ -56,12 +56,28 @@ const enumCard = (function () {
         enumActionDirection: Object.freeze({
             STOP:"you prevent the next player turn",
             CHANGE_COLOR:"you need to pick one of the buttons",
-            PLUS:"if you have another card: same sign, or same color put it, otherwise take card from stack",
-            TAKI:"please put on the stack all of your cards witch the same color of the taki",
-            TWO_PLUS:"if you have put plus two card, otherwise take cards from stack"
-        })
+            PLUS:"put another card: same sign/color, otherwise take card",
+            TAKI:"put your cards witch the same color of the taki",
+            TWO_PLUS:"put two plus card, otherwise take cards",
+            CHANGE_DIR:"The game change his direction"
+        }),
+
+        enumReactPosition_0: Object.freeze({
+            BUTTON: 0, UP: 1, LEFT: 2, RIGHT: 3
+        }),
+
+        enumReactPosition_1: Object.freeze({
+            UP: 0, BUTTON: 1, LEFT: 2, RIGHT: 3
+        }),
+
+        enumReactPosition_2: Object.freeze({
+            UP: 0, LEFT: 1, BUTTON: 2, RIGHT: 3
+        }),
+
+        enumReactPosition_3: Object.freeze({
+            UP: 0, LEFT: 1, RIGHT: 2, BUTTON: 3
+        }),
     }
 })();
 
-export {enumCard}
-
+module.exports.enumCard = enumCard;

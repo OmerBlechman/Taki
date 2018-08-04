@@ -1,9 +1,11 @@
-import Card from "./card";
-import {enumCard} from './enumCard'
-export default class Stop extends Card{
+const {enumCard} = require('./enumCard');
+const Card = require('./card');
+
+
+class Stop extends Card{
 
     constructor(theColor, theSign, theId){
-        super(theColor, theSign, theId,10);
+        super(theColor, theSign, theId);
         this.direction = enumCard.enumActionDirection.STOP;
     }
 
@@ -15,3 +17,5 @@ export default class Stop extends Card{
         return !lastCard.isActive() && (lastCard.getColor() === this.getColor() || lastCard.getSign() === this.getSign());
     }
 }
+
+module.exports = Stop;

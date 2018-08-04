@@ -1,23 +1,15 @@
-import {enumCard} from './enumCard'
+class Card{
 
-export default class Card{
-
-    constructor (theColor, theSign, theId, theScore){
+    constructor (theColor, theSign, theId){
         this.color = theColor;
         this.sign = theSign;
         this.active = false;
         this.id = theId;
-        this.score = theScore;
         this.uniqueCardImage = undefined;
     }
 
     setUniqueImage(imgName) {
-        let colorName;
-        if( this.color !== undefined)
-            colorName = Object.keys(enumCard.enumColor)[this.color].toLowerCase();
-        else
-            colorName = "other";
-        this.uniqueCardImage = "../src/Images/" + colorName + "/" + imgName.toLowerCase() + ".png";
+        this.uniqueCardImage = imgName.toLowerCase() + ".png";
     }
 
     isActive (){
@@ -52,3 +44,5 @@ export default class Card{
         this.active = activeness;
     };
 }
+
+module.exports = Card;
